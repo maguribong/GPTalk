@@ -1,47 +1,74 @@
 // src/GPTalk.js
 import React from 'react';
+import axios from 'axios';
+import { Container, Row, Col, ListGroup, Form, Button } from 'react-bootstrap';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 class GPTalk extends React.Component {
     constructor(props) {
         super(props);
+
         this.state = {
+            chatHistory: [],
             userInput: '',
         };
     }
 
-    handleSubmit = async (e) => {
+    handleSendMessage = async (e) => {
         e.preventDefault();
+        if (!this.state.userInput.trim()) return;
 
-        // Send the user input to the backend
-        const response = await fetch('/api/user-input', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ userInput: this.state.userInput }),
-        });
-        const data = await response.json();
-        console.log(data.message);
-    };
+        this.setState((prevState) => ({
+            chatHistory: [...prevState.chatHistory, { type: 'user', content: prevState.userInput }],
+        }));
 
-    handleChange = (e) => {
-        this.setState({ userInput: e.target.value });
+        try {
+            const response = await axios.post('/api/chat', { userInput: this.state.userInput });
+            const chatGptResponse = response.data.message;
+
+            this.setState((prevState) => ({
+                chatHistory: [...prevState.chatHistory, { type: 'chatgpt', content: chatGptResponse }],
+            }));
+        } catch (error) {
+            console.error(error);
+            this.setState((prevState) => ({
+                chatHistory: [...prevState.chatHistory, { type: 'error', content: 'Error communicating with the server.' }],
+            }));
+        }
+
+        this.setState({ userInput: '' });
     };
 
     render() {
         return (
-            <div>
-                <h1>Welcome to GPTalk!</h1>
-                <form onSubmit={this.handleSubmit}>
-                    <input
-                        type="text"
-                        value={this.state.userInput}
-                        onChange={this.handleChange}
-                        placeholder="Type your message here"
-                    />
-                    <button type="submit">Send</button>
-                </form>
-            </div>
+            <Container>
+                <Row>
+                    <Col>
+                        <ListGroup className="chat-history">
+                            {this.state.chatHistory.map((message, index) => (
+                                <ListGroup.Item key={index} className={`message ${message.type}`}>
+                                    {message.content}
+                                </ListGroup.Item>
+                            ))}
+                        </ListGroup>
+                    </Col>
+                </Row>
+                <Row>
+                    <Col>
+                        <Form onSubmit={this.handleSendMessage} className="input-form">
+                            <Form.Group controlId="userInput">
+                                <Form.Control
+                                    type="text"
+                                    value={this.state.userInput}
+                                    onChange={(e) => this.setState({ userInput: e.target.value })}
+                                    placeholder="Type your message..."
+                                />
+                            </Form.Group>
+                            <Button type="submit">Send</Button>
+                        </Form>
+                    </Col>
+                </Row>
+            </Container>
         );
     }
 }
