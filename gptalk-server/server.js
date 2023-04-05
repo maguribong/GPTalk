@@ -1,10 +1,11 @@
+require('dotenv').config();
 const express = require('express');
 const bodyParser = require('body-parser');
 const axios = require('axios');
 const app = express();
 const PORT = process.env.PORT || 3001;
 
-const OPENAI_API_KEY = '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';
+const OPENAI_API_KEY = process.env.OPENAI_API_KEY;
 
 app.use(bodyParser.json());
 
