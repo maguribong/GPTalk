@@ -14,26 +14,50 @@ class GPTalk extends React.Component {
         };
     }
 
+    typeMessage = async (messageType, messageContent, shouldAnimate) => {
+        if (shouldAnimate) {
+            const words = messageContent.split(' ');
+            let currentWordIndex = 0;
+            let typedMessage = '';
+
+            const typeWord = () => {
+                typedMessage += words[currentWordIndex] + ' ';
+                this.setState((prevState) => ({
+                    chatHistory: [...prevState.chatHistory.slice(0, -1), { type: messageType, content: typedMessage }],
+                }));
+                currentWordIndex++;
+
+                if (currentWordIndex < words.length) {
+                    setTimeout(typeWord, 100);
+                }
+            };
+
+            this.setState((prevState) => ({
+                chatHistory: [...prevState.chatHistory, { type: messageType, content: typedMessage }],
+            }));
+
+            setTimeout(typeWord, 100);
+        } else {
+            this.setState((prevState) => ({
+                chatHistory: [...prevState.chatHistory, { type: messageType, content: messageContent }],
+            }));
+        }
+    };
+
     handleSendMessage = async (e) => {
         e.preventDefault();
         if (!this.state.userInput.trim()) return;
 
-        this.setState((prevState) => ({
-            chatHistory: [...prevState.chatHistory, { type: 'user', content: prevState.userInput }],
-        }));
+        await this.typeMessage('user', this.state.userInput, false);
 
         try {
             const response = await axios.post('/api/chat', { userInput: this.state.userInput });
             const chatGptResponse = response.data.message;
 
-            this.setState((prevState) => ({
-                chatHistory: [...prevState.chatHistory, { type: 'chatgpt', content: chatGptResponse }],
-            }));
+            await this.typeMessage('chatgpt', chatGptResponse, true);
         } catch (error) {
             console.error(error);
-            this.setState((prevState) => ({
-                chatHistory: [...prevState.chatHistory, { type: 'error', content: 'Error communicating with the server.' }],
-            }));
+            await this.typeMessage('error', 'Error communicating with the server.', true);
         }
 
         this.setState({ userInput: '' });
@@ -41,12 +65,12 @@ class GPTalk extends React.Component {
 
     render() {
         return (
-            <Container>
+            <Container fluid>
                 <Navbar bg="light">
                     <Navbar.Brand>GPTalk</Navbar.Brand>
                     <Navbar.Text className="model-name">Model: gpt-3.5-turbo</Navbar.Text>
                 </Navbar>
-                <Row>
+                <Row className="chat-row">
                     <Col>
                         <ListGroup className="chat-history">
                             {this.state.chatHistory.map((message, index) => (
@@ -58,10 +82,9 @@ class GPTalk extends React.Component {
                     </Col>
                 </Row>
                 <Row className="input-row">
-                    <Col xs={9}>
+                    <Col xs={10}>
                         <Form onSubmit={this.handleSendMessage} className="input-form">
-                            <Form.Group controlId="userInput">
-                                <Form.Control
+                            <Form.Group controlId="userInput" className="full-width">{/* had to put this in a form group to get full width of user input-box */}                                <Form.Control
                                     type="text"
                                     value={this.state.userInput}
                                     onChange={(e) => this.setState({ userInput: e.target.value })}
@@ -70,7 +93,7 @@ class GPTalk extends React.Component {
                             </Form.Group>
                         </Form>
                     </Col>
-                    <Col xs={3}>
+                    <Col xs={2}>
                         <Button onClick={this.handleSendMessage}>Send</Button>
                     </Col>
                 </Row>
