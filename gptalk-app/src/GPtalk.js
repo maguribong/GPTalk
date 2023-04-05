@@ -1,8 +1,8 @@
-// src/GPTalk.js
 import React from 'react';
 import axios from 'axios';
-import { Container, Row, Col, ListGroup, Form, Button } from 'react-bootstrap';
+import { Container, Row, Col, ListGroup, Form, Button, Navbar } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import './GPTalk.css'; // Import CSS file
 
 class GPTalk extends React.Component {
     constructor(props) {
@@ -42,6 +42,10 @@ class GPTalk extends React.Component {
     render() {
         return (
             <Container>
+                <Navbar bg="light">
+                    <Navbar.Brand>GPTalk</Navbar.Brand>
+                    <Navbar.Text className="model-name">Model: gpt-3.5-turbo</Navbar.Text>
+                </Navbar>
                 <Row>
                     <Col>
                         <ListGroup className="chat-history">
@@ -53,8 +57,8 @@ class GPTalk extends React.Component {
                         </ListGroup>
                     </Col>
                 </Row>
-                <Row>
-                    <Col>
+                <Row className="input-row">
+                    <Col xs={9}>
                         <Form onSubmit={this.handleSendMessage} className="input-form">
                             <Form.Group controlId="userInput">
                                 <Form.Control
@@ -64,8 +68,10 @@ class GPTalk extends React.Component {
                                     placeholder="Type your message..."
                                 />
                             </Form.Group>
-                            <Button type="submit">Send</Button>
                         </Form>
+                    </Col>
+                    <Col xs={3}>
+                        <Button onClick={this.handleSendMessage}>Send</Button>
                     </Col>
                 </Row>
             </Container>
