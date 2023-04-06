@@ -27,6 +27,8 @@ GPTalk:
                                                     - form-control: input element for user messages
                                   - col (sendButton):
                                         - button: sends the user's message
+                - app.js: the main application file that imports GPTalk component
+                - index.js: the entry point for the application, renders the App component
           - styles:
                 - GPTalk.css: contains the styling for the GPTalk component
 
