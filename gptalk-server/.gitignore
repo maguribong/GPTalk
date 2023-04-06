@@ -1,0 +1,33 @@
+# ignore .env
+.env
+
+# ignore .idea
+.idea
+
+# ignore typical files that should not be versioned
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# ignore .vagrant
+.vagrant
+
+# ignore node_modules
+node_modules/
+
+# ignore bower_components
+bower_components/
+
+# ignore .sass-cache
+.sass-cache/
+
+# ignore .tmp
+.tmp/
+
+# ignore .grunt
+.grunt/
+
