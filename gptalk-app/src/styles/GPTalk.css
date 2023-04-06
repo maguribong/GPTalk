@@ -1,11 +1,32 @@
 /* GPTalk.css */
 
+.gptalk-container {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background-color: var(--bg);
+}
+
+.gptalk-container[data-theme="light"] {
+    --bg: #f8f9fa;
+    --text: #212529;
+    --message-bg-bot: #e9ecef;
+    --message-bg-user: #f8f9fa;
+}
+
+.gptalk-container[data-theme="dark"] {
+    --bg: #343a40;
+    --text: #f8f9fa;
+    --message-bg-bot: #495057;
+    --message-bg-user: #212529;
+}
+
 .input-row {
     position: fixed;
     bottom: 0;
     width: 100%;
     padding: 20px;
-    background-color: white;
+    background-color: var(--bg);
     border-top: 1px solid #ccc;
 }
 
@@ -23,6 +44,7 @@
     display: flex;
     width: 100%;
 }
+
 .full-width {
     width: 100%;
 }
@@ -37,11 +59,17 @@
 
 .message {
     word-wrap: break-word;
+    background-color: var(--message-bg-bot);
+    color: var(--text);
+    animation: fadein 0.5s;
 }
 
 .message.user {
     text-align: right;
     font-weight: bold;
+    background-color: var(--message-bg-user);
+    color: var(--text);
+    animation: fadein 0.5s;
 }
 
 .message.chatgpt {
@@ -57,4 +85,13 @@
 
 .model-name {
     margin-left: 15px;
+}
+
+@keyframes fadein {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
 }

@@ -1,15 +1,31 @@
-// chatgpt-app/src/App.js
-import React from 'react';
-import './App.css';
-import GPTalk from './components/GPtalk.js'; // Import the GPTalk component
+import React, { Component } from "react";
+import GPTalk from "./components/GPTalk";
+import ThemeContext from "./ThemeContext";
 
-function App() {
-  return (
-      <div className="App">
-        <GPTalk /> {/* Render the GPTalk component */}
-      </div>
-  );
+class App extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            theme: "light",
+        };
+    }
+
+    toggleTheme = (newTheme) => {
+        this.setState({ theme: newTheme });
+    };
+
+    render() {
+        return (
+            <ThemeContext.Provider
+                value={{
+                    theme: this.state.theme,
+                    toggleTheme: this.toggleTheme,
+                }}
+            >
+                <GPTalk />
+            </ThemeContext.Provider>
+        );
+    }
 }
-
 
 export default App;

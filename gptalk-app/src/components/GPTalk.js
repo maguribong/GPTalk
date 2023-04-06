@@ -84,7 +84,8 @@ class GPTalk extends React.Component {
                 <Row className="input-row">
                     <Col xs={10}>
                         <Form onSubmit={this.handleSendMessage} className="input-form">
-                            <Form.Group controlId="userInput" className="full-width">{/* had to put this in a form group to get full width of user input-box */}                                <Form.Control
+                            <Form.Group controlId="userInput" className="full-width">{/* had to put this in a form group to get full width of user input-box */}
+                                <Form.Control
                                     type="text"
                                     value={this.state.userInput}
                                     onChange={(e) => this.setState({ userInput: e.target.value })}
