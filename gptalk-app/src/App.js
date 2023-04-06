@@ -1,7 +1,7 @@
 // chatgpt-app/src/App.js
 import React from 'react';
 import './App.css';
-import GPTalk from './GPtalk.js'; // Import the GPTalk component
+import GPTalk from './components/GPtalk.js'; // Import the GPTalk component
 
 function App() {
   return (

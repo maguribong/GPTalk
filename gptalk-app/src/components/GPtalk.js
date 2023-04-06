@@ -2,7 +2,7 @@ import React from 'react';
 import axios from 'axios';
 import { Container, Row, Col, ListGroup, Form, Button, Navbar } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import './GPTalk.css'; // Import CSS file
+import '../styles/GPTalk.css'; // Import CSS file
 
 class GPTalk extends React.Component {
     constructor(props) {

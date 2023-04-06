@@ -1,55 +1,56 @@
 GPTalk:
-    - frontend:
-          - components:
-                - GPTalk:
-                      - dependencies:
-                            - axios: for making HTTP requests
-                            - react-bootstrap: for styling and UI components
-                      - constructor:
-                            - state:
-                                  - chatHistory: holds the chat history messages
-                                  - userInput: holds the user's current input
-                      - methods:
-                            - typeMessage: adds messages to the chatHistory with optional typing animation
-                            - handleSendMessage: sends user input to the backend, receives response, and updates chat history
-                      - container:
-                            - navbar:
-                                  - navbar-brand: GPTalk brand name
-                                  - navbar-text: model name display
-                            - row (chat-row):
-                                  - col:
-                                        - listgroup (chat-history): displays the chat history
-                                              - listgroup-item (message): displays individual messages in chat history
-                            - input-row:
-                                  - col (userInput):
-                                        - form (input-form): captures user input
-                                              - form-group (full-width): expands the width of the user input box
-                                                    - form-control: input element for user messages
-                                  - col (sendButton):
-                                        - button: sends the user's message
-                - app.js: the main application file that imports GPTalk component
-                - index.js: the entry point for the application, renders the App component
-          - styles:
-                - GPTalk.css: contains the styling for the GPTalk component
+      - frontend:
+              - src:
+                      - components:
+                              - GPTalk:
+                                      - dependencies:
+                                              - axios: for making HTTP requests
+                                              - react-bootstrap: for styling and UI components
+                                      - constructor:
+                                              - state:
+                                                      - chatHistory: holds the chat history messages
+                                                      - userInput: holds the user's current input
+                                      - methods:
+                                              - typeMessage: adds messages to the chatHistory with optional typing animation
+                                              - handleSendMessage: sends user input to the backend, receives response, and updates chat history
+                                      - container:
+                                              - navbar:
+                                                      - navbar-brand: GPTalk brand name
+                                                      - navbar-text: model name display
+                                              - row (chat-row):
+                                                      - col:
+                                                              - listgroup (chat-history): displays the chat history
+                                                                      - listgroup-item (message): displays individual messages in chat history
+                                              - input-row:
+                                                      - col (userInput):
+                                                              - form (input-form): captures user input
+                                                                      - form-group (full-width): expands the width of the user input box
+                                                                              - form-control: input element for user messages
+                                                      - col (sendButton):
+                                                              - button: sends the user's message
+                      - App.js: the main application file that imports GPTalk component
+                      - index.js: the entry point for the application, renders the App component
+                      - styles:
+                              - GPTalk.css: contains the styling for the GPTalk component
 
-    - backend:
-          - server:
-                - dependencies:
-                      - dotenv: loads environment variables from .env file
-                      - express: web server framework
-                      - body-parser: parses request bodies
-                      - axios: for making HTTP requests
-                - configuration:
-                      - dotenv.config: loads the .env file
-                      - process.env.OPENAI_API_KEY: retrieves the API key from the environment
-                - middleware:
-                      - bodyParser.json: parses JSON request bodies
-                - api_routes:
-                      - POST /api/chat: handles chat requests and interacts with the OpenAI API
-                - server_setup:
-                      - app.listen: starts the web server
-                - response_handlers:
-                      - user_input_validation: checks for valid user input
-                      - chatGPT_api_request: sends the user input to the OpenAI API
-                      - error_handling: handles errors from the OpenAI API and the server
-                      - welcome_message: displays a welcome message on the root path
+      - backend:
+              - server.js:
+                      - dependencies:
+                              - dotenv: loads environment variables from .env file
+                              - express: web server framework
+                              - body-parser: parses request bodies
+                              - axios: for making HTTP requests
+                      - configuration:
+                              - dotenv.config: loads the .env file
+                              - process.env.OPENAI_API_KEY: retrieves the API key from the environment
+                      - middleware:
+                              - bodyParser.json: parses JSON request bodies
+                      - api_routes:
+                              - POST /api/chat: handles chat requests and interacts with the OpenAI API
+                      - server_setup:
+                              - app.listen: starts the web server
+                      - response_handlers:
+                              - user_input_validation: checks for valid user input
+                              - chatGPT_api_request: sends the user input to the OpenAI API
+                              - error_handling: handles errors from the OpenAI API and the server
+                              - welcome_message: displays a welcome message on the root path
