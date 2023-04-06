@@ -1,0 +1,53 @@
+GPTalk:
+  - frontend:
+      - components:
+          - GPTalk:
+              - dependencies:
+                  - axios
+                  - react-bootstrap
+              - constructor:
+                  - state:
+                      - chatHistory
+                      - userInput
+              - methods:
+                  - typeMessage
+                  - handleSendMessage
+              - container:
+                  - navbar:
+                      - navbar-brand
+                      - navbar-text
+                  - row (chat-row):
+                      - col:
+                          - listgroup (chat-history):
+                              - listgroup-item (message)
+                  - input-row:
+                      - col (userInput):
+                          - form (input-form):
+                              - form-group (full-width):
+                                  - form-control
+                      - col (sendButton):
+                          - button
+      - styles:
+          - GPTalk.css
+
+  - backend:
+      - server:
+          - dependencies:
+              - dotenv
+              - express
+              - body-parser
+              - axios
+          - configuration:
+              - dotenv.config
+              - process.env.OPENAI_API_KEY
+          - middleware:
+              - bodyParser.json
+          - api_routes:
+              - POST /api/chat
+          - server_setup:
+              - app.listen
+          - response_handlers:
+              - user_input_validation
+              - chatGPT_api_request
+              - error_handling
+              - welcome_message
