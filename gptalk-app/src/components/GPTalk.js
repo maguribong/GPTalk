@@ -3,6 +3,7 @@ import axios from 'axios';
 import { Container, Row, Col, ListGroup, Form, Button, Navbar } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../styles/GPTalk.css'; // Import CSS file
+import ThemeContext from '../ThemeContext';
 
 class GPTalk extends React.Component {
     constructor(props) {
@@ -13,6 +14,11 @@ class GPTalk extends React.Component {
             userInput: '',
         };
     }
+
+    handleThemeChange = (event) => {
+        const theme = event.target.value;
+        this.context.handleThemeChange(theme); // Use the handleThemeChange from context instead of props
+    };
 
     typeMessage = async (messageType, messageContent, shouldAnimate) => {
         if (shouldAnimate) {
@@ -65,42 +71,70 @@ class GPTalk extends React.Component {
 
     render() {
         return (
-            <Container fluid>
-                <Navbar bg="light">
-                    <Navbar.Brand>GPTalk</Navbar.Brand>
-                    <Navbar.Text className="model-name">Model: gpt-3.5-turbo</Navbar.Text>
-                </Navbar>
-                <Row className="chat-row">
-                    <Col>
-                        <ListGroup className="chat-history">
-                            {this.state.chatHistory.map((message, index) => (
-                                <ListGroup.Item key={index} className={`message ${message.type}`}>
-                                    {message.content}
-                                </ListGroup.Item>
-                            ))}
-                        </ListGroup>
-                    </Col>
-                </Row>
-                <Row className="input-row">
-                    <Col xs={10}>
-                        <Form onSubmit={this.handleSendMessage} className="input-form">
-                            <Form.Group controlId="userInput" className="full-width">{/* had to put this in a form group to get full width of user input-box */}
-                                <Form.Control
-                                    type="text"
-                                    value={this.state.userInput}
-                                    onChange={(e) => this.setState({ userInput: e.target.value })}
-                                    placeholder="Type your message..."
+            <ThemeContext.Consumer>
+                {({ theme, toggleTheme }) => (
+                    <Container fluid className={`GPTalk ${theme}`}>
+                        <Navbar expand="lg" variant="dark" bg="primary">
+                            <Navbar.Brand href="#">GPTalk</Navbar.Brand>
+                            <Navbar.Text>
+                                Model: <strong>GPT-4</strong>
+                            </Navbar.Text>
+                            <Form className="ml-auto">
+                                <Form.Check
+                                    className="theme-radio" // Add this line to add a class to the radio button
+                                    label="Light"
+                                    type="radio"
+                                    name="theme"
+                                    value="light"
+                                    checked={theme === 'light'}
+                                    onChange={this.handleThemeChange}
                                 />
-                            </Form.Group>
-                        </Form>
-                    </Col>
-                    <Col xs={2}>
-                        <Button onClick={this.handleSendMessage}>Send</Button>
-                    </Col>
-                </Row>
-            </Container>
+                                <Form.Check
+                                    className="theme-radio" // Add this line
+                                    label="Dark"
+                                    type="radio"
+                                    name="theme"
+                                    value="dark"
+                                    checked={theme === 'dark'}
+                                    onChange={this.handleThemeChange}
+                                />
+                            </Form>
+                        </Navbar>
+                        <Row className="chat-row">
+                            <Col>
+                                <ListGroup className="chat-history">
+                                    {this.state.chatHistory.map((message, index) => (
+                                        <ListGroup.Item key={index} className={`message ${message.type}`}>
+                                            {message.content}
+                                        </ListGroup.Item>
+                                    ))}
+                                </ListGroup>
+                            </Col>
+                        </Row>
+                        <Row className="input-row">
+                            <Col xs={10}>
+                                <Form onSubmit={this.handleSendMessage} className="input-form">
+                                    <Form.Group controlId="userInput" className="full-width">{/* had to put this in a form group to get full width of user input-box */}
+                                        <Form.Control
+                                            type="text"
+                                            value={this.state.userInput}
+                                            onChange={(e) => this.setState({ userInput: e.target.value })}
+                                            placeholder="Type your message..."
+                                        />
+                                    </Form.Group>
+                                </Form>
+                            </Col>
+                            <Col xs={2}>
+                                <Button onClick={this.handleSendMessage}>Send</Button>
+                            </Col>
+                        </Row>
+                    </Container>
+                )}
+            </ThemeContext.Consumer>
         );
     }
 }
+
+GPTalk.contextType = ThemeContext; // Set the contextType for GPTalk
 
 export default GPTalk;

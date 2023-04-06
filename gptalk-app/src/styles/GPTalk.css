@@ -21,6 +21,12 @@
     --message-bg-user: #212529;
 }
 
+.gptalk-theme-switch .form-check {
+    display: inline-flex;
+    align-items: center;
+    margin-right: 8px;
+}
+
 .input-row {
     position: fixed;
     bottom: 0;
@@ -94,4 +100,23 @@
     to {
         opacity: 1;
     }
+}
+
+.theme-radio {
+    display: inline-block;
+    margin-right: 10px;
+}
+
+.GPTalk {
+    height: 100vh;
+}
+
+.GPTalk.light {
+    background-color: #f8f9fa;
+    color: #212529;
+}
+
+.GPTalk.dark {
+    background-color: #343a40;
+    color: #f8f9fa;
 }
