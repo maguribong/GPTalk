@@ -72,9 +72,9 @@ class GPTalk extends React.Component {
     render() {
         return (
             <ThemeContext.Consumer>
-                {({ theme, toggleTheme }) => (
+                {({ theme}) => (
                     <Container fluid className={`GPTalk ${theme}`}>
-                        <Navbar expand="lg" variant="dark" bg="primary">
+                        <Navbar expand="lg">
                             <Navbar.Brand href="#">GPTalk</Navbar.Brand>
                             <Navbar.Text>
                                 Model: <strong>GPT-4</strong>
@@ -100,7 +100,7 @@ class GPTalk extends React.Component {
                                 />
                             </Form>
                         </Navbar>
-                        <Row className="chat-row">
+                        <Row>
                             <Col>
                                 <ListGroup className="chat-history">
                                     {this.state.chatHistory.map((message, index) => (

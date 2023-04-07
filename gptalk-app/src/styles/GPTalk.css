@@ -1,30 +1,40 @@
 /* GPTalk.css */
-
-.gptalk-container {
+.GPTalk {
     height: 100vh;
-    display: flex;
-    flex-direction: column;
-    background-color: var(--bg);
 }
 
-.gptalk-container[data-theme="light"] {
-    --bg: #f8f9fa;
-    --text: #212529;
+.GPTalk.light {
+    background-color: #f8f9fa;
+    color: #212529;
+    --text: #212529; /* New variable for text color in light theme */
+    --navbar-bg: #007bff; /* New variable for navbar background color in light theme */
+    --navbar-text: #fff; /* New variable for navbar text color in light theme */
     --message-bg-bot: #e9ecef;
     --message-bg-user: #f8f9fa;
 }
 
-.gptalk-container[data-theme="dark"] {
-    --bg: #343a40;
+.GPTalk.dark {
+    background-color: #343a40;
+    color: #f8f9fa;
     --text: #f8f9fa;
+    --navbar-bg: #343a40; /* New variable for navbar background color in dark theme */
+    --navbar-text: #f8f9fa; /* New variable for navbar text color in dark theme */
     --message-bg-bot: #495057;
     --message-bg-user: #212529;
 }
 
-.gptalk-theme-switch .form-check {
-    display: inline-flex;
-    align-items: center;
-    margin-right: 8px;
+/* New styles for the navbar in both themes */
+.navbar {
+    background-color: var(--navbar-bg);
+    color: var(--navbar-text);
+}
+
+.navbar-text {
+    color: var(--navbar-text);
+}
+.theme-radio {
+    display: inline-block;
+    margin-right: 10px;
 }
 
 .input-row {
@@ -32,7 +42,7 @@
     bottom: 0;
     width: 100%;
     padding: 20px;
-    background-color: var(--bg);
+    background-color: inherit;
     border-top: 1px solid #ccc;
 }
 
@@ -85,7 +95,6 @@
 
 .message.error {
     text-align: center;
-    font-weight: normal;
     color: red;
 }
 
@@ -102,21 +111,5 @@
     }
 }
 
-.theme-radio {
-    display: inline-block;
-    margin-right: 10px;
-}
 
-.GPTalk {
-    height: 100vh;
-}
 
-.GPTalk.light {
-    background-color: #f8f9fa;
-    color: #212529;
-}
-
-.GPTalk.dark {
-    background-color: #343a40;
-    color: #f8f9fa;
-}
