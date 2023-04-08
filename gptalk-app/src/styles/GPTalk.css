@@ -1,29 +1,37 @@
 /* GPTalk.css */
+
+/* 1. General styles */
 .GPTalk {
     height: 100vh;
 }
 
+/* 2. Theme-specific variables */
 .GPTalk.light {
     background-color: #f8f9fa;
     color: #212529;
     --text: #212529; /* New variable for text color in light theme */
-    --navbar-bg: #007bff; /* New variable for navbar background color in light theme */
-    --navbar-text: #fff; /* New variable for navbar text color in light theme */
-    --message-bg-bot: #e9ecef;
+    --navbar-bg: #f8f9fa; /* New variable for navbar background color in light theme */
+    --navbar-text: #343a40; /* New variable for navbar text color in light theme */
+    --navbar-model-text: rgba(58, 52, 51, 0.7); /* Add this line for light theme model text color */
+    --message-bg-bot: #2b2a2a;
     --message-bg-user: #f8f9fa;
+    --form-control-bg: #f8f9fa;
 }
+
 
 .GPTalk.dark {
     background-color: #343a40;
-    color: #f8f9fa;
+    color: #f8f9fa; /* New variable for text color in dark theme */
     --text: #f8f9fa;
     --navbar-bg: #343a40; /* New variable for navbar background color in dark theme */
     --navbar-text: #f8f9fa; /* New variable for navbar text color in dark theme */
+    --navbar-model-text: rgba(241, 233, 231, 0.6);  /* Add this line for dark theme model text color */
     --message-bg-bot: #495057;
     --message-bg-user: #212529;
+    --form-control-bg: #343a40;
 }
 
-/* New styles for the navbar in both themes */
+/* 3. Navbar-related styles */
 .navbar {
     background-color: var(--navbar-bg);
     color: var(--navbar-text);
@@ -32,20 +40,17 @@
 .navbar-text {
     color: var(--navbar-text);
 }
+
+.navbar-model-text {
+    color: var(--navbar-model-text);
+}
+
 .theme-radio {
     display: inline-block;
     margin-right: 10px;
 }
 
-.input-row {
-    position: fixed;
-    bottom: 0;
-    width: 100%;
-    padding: 20px;
-    background-color: inherit;
-    border-top: 1px solid #ccc;
-}
-
+/* 4. Chat-related styles */
 .chat-history {
     height: calc(100vh - 200px);
     overflow-y: auto;
@@ -54,6 +59,43 @@
     flex-direction: column;
     justify-content: flex-end;
     padding-bottom: 60px;
+}
+
+.message {
+    word-wrap: break-word;
+    background-color: var(--message-bg-bot);
+    color: var(--text);
+    animation: fadein 1s;
+}
+
+.message.user {
+    text-align: right;
+    font-weight: bold;
+    background-color: var(--message-bg-user);
+    color: var(--text);
+    animation: fadein 1s;
+}
+
+.message.chat-response {
+    background-color: var(--message-bg-user);
+    text-align: left;
+    font-weight: normal;
+}
+
+.message.error {
+    background-color: var(--message-bg-user);
+    text-align: center;
+    color: red;
+}
+
+/* 5. Input-related styles */
+.input-row {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    padding: 20px;
+    background-color: inherit;
+    border-top: 1px solid #ccc;
 }
 
 .input-form {
@@ -71,37 +113,10 @@
 
 .form-control {
     width: 100%;
+    background-color: var(--form-control-bg);
 }
 
-.message {
-    word-wrap: break-word;
-    background-color: var(--message-bg-bot);
-    color: var(--text);
-    animation: fadein 0.5s;
-}
-
-.message.user {
-    text-align: right;
-    font-weight: bold;
-    background-color: var(--message-bg-user);
-    color: var(--text);
-    animation: fadein 0.5s;
-}
-
-.message.chatgpt {
-    text-align: left;
-    font-weight: normal;
-}
-
-.message.error {
-    text-align: center;
-    color: red;
-}
-
-.model-name {
-    margin-left: 15px;
-}
-
+/* 6. Animations */
 @keyframes fadein {
     from {
         opacity: 0;

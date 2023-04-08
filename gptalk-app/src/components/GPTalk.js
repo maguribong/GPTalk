@@ -60,7 +60,7 @@ class GPTalk extends React.Component {
             const response = await axios.post('/api/chat', { userInput: this.state.userInput });
             const chatGptResponse = response.data.message;
 
-            await this.typeMessage('chatgpt', chatGptResponse, true);
+            await this.typeMessage('chat-response', chatGptResponse, true);
         } catch (error) {
             console.error(error);
             await this.typeMessage('error', 'Error communicating with the server.', true);
@@ -76,7 +76,7 @@ class GPTalk extends React.Component {
                     <Container fluid className={`GPTalk ${theme}`}>
                         <Navbar expand="lg">
                             <Navbar.Brand href="#">GPTalk</Navbar.Brand>
-                            <Navbar.Text>
+                            <Navbar.Text className="navbar-model-text">
                                 Model: <strong>GPT-4</strong>
                             </Navbar.Text>
                             <Form className="ml-auto">
