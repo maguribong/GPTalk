@@ -1,9 +1,12 @@
 import React from 'react';
 import axios from 'axios';
-import { Container, Row, Col, ListGroup, Form, Button, Navbar } from 'react-bootstrap';
+import { Container, Row, Navbar } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../styles/GPTalk.css'; // Import CSS file
 import ThemeContext from '../ThemeContext';
+import ChatHistory from './ChatHistory';
+import MessageInput from './MessageInput';
+import ThemeSwitcher from './ThemeSwitcher';
 
 class GPTalk extends React.Component {
     constructor(props) {
@@ -79,55 +82,12 @@ class GPTalk extends React.Component {
                             <Navbar.Text className="navbar-model-text">
                                 Model: <strong>GPT-4</strong>
                             </Navbar.Text>
-                            <Form className="ml-auto">
-                                <Form.Check
-                                    className="theme-radio" // Add this line to add a class to the radio button
-                                    label="Light"
-                                    type="radio"
-                                    name="theme"
-                                    value="light"
-                                    checked={theme === 'light'}
-                                    onChange={this.handleThemeChange}
-                                />
-                                <Form.Check
-                                    className="theme-radio" // Add this line
-                                    label="Dark"
-                                    type="radio"
-                                    name="theme"
-                                    value="dark"
-                                    checked={theme === 'dark'}
-                                    onChange={this.handleThemeChange}
-                                />
-                            </Form>
+                            <ThemeSwitcher theme={theme} onThemeChange={this.handleThemeChange} />
                         </Navbar>
                         <Row>
-                            <Col>
-                                <ListGroup className="chat-history">
-                                    {this.state.chatHistory.map((message, index) => (
-                                        <ListGroup.Item key={index} className={`message ${message.type}`}>
-                                            {message.content}
-                                        </ListGroup.Item>
-                                    ))}
-                                </ListGroup>
-                            </Col>
+                            <ChatHistory chatHistory={this.state.chatHistory} />
                         </Row>
-                        <Row className="input-row">
-                            <Col xs={10}>
-                                <Form onSubmit={this.handleSendMessage} className="input-form">
-                                    <Form.Group controlId="userInput" className="full-width">{/* had to put this in a form group to get full width of user input-box */}
-                                        <Form.Control
-                                            type="text"
-                                            value={this.state.userInput}
-                                            onChange={(e) => this.setState({ userInput: e.target.value })}
-                                            placeholder="Type your message..."
-                                        />
-                                    </Form.Group>
-                                </Form>
-                            </Col>
-                            <Col xs={2}>
-                                <Button onClick={this.handleSendMessage}>Send</Button>
-                            </Col>
-                        </Row>
+                        <MessageInput userInput={this.state.userInput} onUserInputChange={(e) => this.setState({ userInput: e.target.value })} onSubmit={this.handleSendMessage} />
                     </Container>
                 )}
             </ThemeContext.Consumer>
