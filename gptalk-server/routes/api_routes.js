@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const axios = require('axios');
 
+const OPENAI_API_KEY = process.env.OPENAI_API_KEY;
 // Add other required dependencies and middleware here
 
 // POST: /api/chat - handles chat requests and interacts with the OpenAI API
